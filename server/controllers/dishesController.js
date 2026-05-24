@@ -44,7 +44,44 @@ class DishesController {
         });
         return res.json(dish);
     }
+    async updatePicture(req, res, next) {
+        try {
+            const { id } = req.params;   // dish_id или id
+            const { picture } = req.files;
 
+            if (!picture) {
+                return next(ApiError.badRequest('Файл изображения не передан'));
+            }
+
+            // Находим блюдо
+            const dish = await Dish.findByPk(id);
+            if (!dish) {
+                return next(ApiError.notFound('Блюдо не найдено'));
+            }
+
+            // Удаляем старую картинку, если она есть (опционально)
+            if (dish.picture) {
+                const oldPath = path.resolve(__dirname, '..', 'static', dish.picture);
+                if (fs.existsSync(oldPath)) {
+                    fs.unlinkSync(oldPath);
+                }
+            }
+
+            // Сохраняем новую
+            let fileName = uuid.v4() + '.jpg';
+            picture.mv(path.resolve(__dirname, '..', 'static', fileName));
+
+            // Обновляем запись
+            dish.picture = fileName;
+            await dish.save();
+
+            return res.json(dish);
+        } catch(e) {
+            next(ApiError.badRequest(e.message));
+        }
+    }
 }
+
+
 
 module.exports = new DishesController();
