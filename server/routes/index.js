@@ -23,6 +23,7 @@ const users = require("./usersRouter");
 
 router.use('/avalibleDishes', avalibleDishes)
 router.use('/basket', basket)
+router.use('/city', city);
 router.use('/customerAddresses', customerAddresses)
 router.use('/dishCategories',dishCategories)
 router.use('/dishes',dishes)

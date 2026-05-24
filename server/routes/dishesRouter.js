@@ -5,6 +5,6 @@ const dishesController = require('../controllers/dishesController');
 router.post("/", dishesController.create);
 router.get("/", dishesController.getAll);
 router.get("/:id", dishesController.getOne);
-router.delete("/:id", );
+router.put("/:id", dishesController.updatePicture);
 
 module.exports = router
