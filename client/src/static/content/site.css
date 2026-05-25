@@ -1,0 +1,86 @@
+/* site.css */
+
+@font-face {
+    font-family: 'Morana';
+    src: url('../fonts/morana.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* улучшает производительность */
+}
+
+:root {
+    --bg-navbar: #F4F1E2;
+    --text-dark: #503228;
+    --text-light: #D8D4B1;
+    --btn-login-bg: #D8D4B1;
+    --btn-login-text: #503228;
+    --btn-cart-bg: #503228;
+    --btn-cart-text: #D8D4B1;
+    --btn-search-bg: #D8D4B1;
+    --border-radius: 20px;
+}
+
+/* Общий фон панели */
+.custom-navbar {
+    background-color: var(--bg-navbar) !important;
+}
+
+/* Название сайта (шрифт Morana) */
+.custom-navbar .fw-bold.nav-link {
+    font-family: 'Morana', cursive, sans-serif !important;
+    font-size: 40px;
+    color: var(--text-dark);
+}
+
+/* Весь остальной текст в навбаре */
+.custom-navbar,
+.custom-navbar .nav-link,
+.custom-navbar .navbar-text,
+.custom-navbar .btn {
+    font-family: 'Nokora', sans-serif;
+    color: var(--text-dark);
+}
+
+/* Контейнер для кнопок */
+.custom-navbar .d-flex {
+    width: 100%;
+}
+
+/* Общие стили для всех кнопок */
+.custom-navbar .btn {
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    border: none;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+/* Кнопка поиска (фон D8D4B1, текст 503228) */
+.custom-navbar .btn-search {
+    background-color: var(--btn-search-bg);
+    color: var(--text-dark);
+}
+
+/* Кнопка входа/выхода (фон D8D4B1, текст 503228) */
+.custom-navbar .btn-login {
+    background-color: var(--btn-login-bg);
+    color: var(--btn-login-text);
+}
+
+/* Кнопка корзины (фон 503228, текст D8D4B1) */
+.custom-navbar .btn-cart {
+    background-color: var(--btn-cart-bg);
+    color: var(--btn-cart-text);
+}
+
+/* Дополнительно: ховеры для кнопок (по желанию) */
+.custom-navbar .btn-login:hover,
+.custom-navbar .btn-search:hover {
+    background-color: #c4c09e;
+    color: var(--text-dark);
+}
+
+.custom-navbar .btn-cart:hover {
+    background-color: #3e281e;
+    color: var(--text-light);
+}

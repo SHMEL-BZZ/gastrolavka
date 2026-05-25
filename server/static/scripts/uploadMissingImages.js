@@ -18,7 +18,7 @@ const sequelize = require('../../db');
         }
 
         // Целевая папка: static/img
-        const targetDir = path.resolve(__dirname, '.../static/img');
+        const targetDir = path.resolve(__dirname, '..../static/img');
         if (!fs.existsSync(targetDir)) {
             fs.mkdirSync(targetDir, { recursive: true });
         }

@@ -1,13 +1,15 @@
-import React, {Component} from 'react';
+import React, {Component, useContext} from 'react';
 import {Routes, Route} from 'react-router-dom';
 import {authRoutes, publicRoutes} from "../routes";
 import Lavka from "../pages/Lavka";
+import {Context} from "../index";
 
 const AppRouter = () => {
-    const isAuth = false;
+    const {user} = useContext(Context);
+    console.log(user);
     return (
         <Routes>
-            {isAuth && authRoutes.map(({path, component: Component}) => (
+            {user.isAuth && authRoutes.map(({path, component: Component}) => (
                 <Route key={path} path={path} element={<Component />} />
             ))}
             {publicRoutes.map(({path, component: Component}) => (
