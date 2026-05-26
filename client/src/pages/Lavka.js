@@ -1,9 +1,12 @@
 import React from 'react';
+import {Container} from "react-bootstrap";
 
 const Lavka = () => {
     return (
         <div>
-            LAVKA
+            <Container>
+
+            </Container>
         </div>
     );
 };

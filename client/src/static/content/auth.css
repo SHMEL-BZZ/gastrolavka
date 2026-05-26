@@ -1,0 +1,143 @@
+/* auth.css – стили для страницы входа/регистрации */
+@import url('https://fonts.googleapis.com/css2?family=Nokora:wght@300;400;500;700&display=swap');
+
+.auth-page {
+    background: #f5f2e6;
+    min-height: 100vh;
+    font-family: 'Nokora', sans-serif;
+}
+
+.auth-card {
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 2rem 2rem 2rem 2rem;
+    transition: transform 0.1s ease;
+}
+
+
+/* Заголовок и переключение режима */
+.auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.auth-header h2 {
+    font-family: 'Morana', cursive, sans-serif;
+    font-size: 2.1rem;
+    color: #503228;
+    margin-bottom: 0.75rem;
+    letter-spacing: 1px;
+}
+
+.auth-header p {
+    color: #7a5a4e;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.auth-toggle-link {
+    background: none;
+    border: none;
+    color: #503228;
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+}
+
+.auth-toggle-link:hover {
+    color: #8b6b5c;
+}
+
+/* Поля ввода */
+.auth-input {
+    background-color: #fefcf5;
+    border: 1px solid #e2dccd;
+    border-radius: 20px;
+    padding: 0.7rem 1.2rem;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    color: #503228;
+}
+
+.auth-input:focus {
+    border-color: #d8d4b1;
+    box-shadow: 0 0 0 3px rgba(216, 212, 177, 0.4);
+    outline: none;
+    background-color: #fffef9;
+}
+
+.form-label {
+    color: #503228;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* Кнопка отправки */
+.auth-btn {
+    background-color: #d8d4b1 !important;
+    color: #503228 !important;
+    border: none !important;
+    border-radius: 30px !important;
+    padding: 0.7rem 1rem !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.auth-btn:hover {
+    background-color: #c9c49c !important;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(80, 50, 40, 0.1);
+}
+
+.auth-btn:active {
+    transform: translateY(1px);
+}
+
+/* Футер (ссылка забыли пароль) */
+.auth-footer {
+    text-align: center;
+    margin-top: 1.8rem;
+}
+
+.forgot-password {
+    color: #7a5a4e;
+    font-size: 0.85rem;
+    text-decoration: none;
+    border-bottom: 1px dashed #d8d4b1;
+    transition: color 0.2s;
+}
+
+.forgot-password:hover {
+    color: #503228;
+    border-bottom-color: #503228;
+}
+
+/* Алёрты */
+.auth-alert {
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    border: none;
+    padding: 0.7rem 1rem;
+}
+
+/* Адаптивность */
+@media (max-width: 576px) {
+    .auth-card {
+        padding: 1.5rem;
+    }
+
+    .auth-header h2 {
+        font-size: 1.7rem;
+    }
+
+    .auth-btn {
+        padding: 0.6rem 1rem;
+    }
+}
