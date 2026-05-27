@@ -1,13 +1,12 @@
+const { Order, AvailibleDish, Dish, OrderDetail } = require('../models/models');
+const ApiError = require('../error/ApiError');
+
+
 class OrderDetailsController {
     async create(req, res) {
 
     }
-    async getAll(req, res) {
 
-    }
-    async getOne(req, res) {
-
-    }
 
 }
 

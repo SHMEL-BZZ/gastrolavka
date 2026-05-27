@@ -3,6 +3,7 @@ const ApiError = require("../error/ApiError");
 const sequelize = require('../db');
 const jwt = require('jsonwebtoken');
 
+
 const generateToken = (id, email, role) => {
         return jwt.sign({id, email, role }, process.env.SECRET_KEY, {expiresIn: '12h'});
 }

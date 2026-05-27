@@ -10,10 +10,13 @@ const app = express();
 const errorHandler = require('./middleware/ErrorHandlerMiddleware');
 const path = require('path');
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 app.use(express.json());
 app.use(fileUpload({}));
-app.use(express.static(path.resolve(__dirname, 'static')));
+app.use('/img', express.static(path.resolve(__dirname, 'static/img')));
 app.use('/api', router)
 
 // Обработка ошибок, последний middleware

@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import { login, registration } from "../http/userAPI";
+import { LAVKA_ROUTE } from "../utils/consts";
+import { Context } from "../index";
 import '../static/content/auth.css';
 
-const Auth = () => {
-    const [isLogin, setIsLogin] = useState(true); // true = вход, false = регистрация
+const Auth = observer(() => {
+    const navigate = useNavigate();
+    const { user } = useContext(Context);
+    const [isLogin, setIsLogin] = useState(true);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -12,6 +19,7 @@ const Auth = () => {
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -19,48 +27,57 @@ const Auth = () => {
         setError('');
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setSuccess('');
+        setLoading(true);
 
         if (!isLogin) {
-            // Валидация регистрации
             if (!formData.name.trim()) {
                 setError('Введите имя');
+                setLoading(false);
                 return;
             }
             if (formData.password !== formData.confirmPassword) {
                 setError('Пароли не совпадают');
+                setLoading(false);
                 return;
             }
             if (formData.password.length < 6) {
                 setError('Пароль должен содержать минимум 6 символов');
+                setLoading(false);
                 return;
             }
         }
 
         if (!formData.email.trim()) {
             setError('Введите email');
+            setLoading(false);
             return;
         }
         if (!formData.password.trim()) {
             setError('Введите пароль');
+            setLoading(false);
             return;
         }
 
-        // Имитация отправки запроса
-        console.log(isLogin ? 'Вход:' : 'Регистрация:', formData);
-        setSuccess(isLogin ? 'Вы успешно вошли!' : 'Регистрация прошла успешно!');
-
-        // Очистка формы после успеха (опционально)
-        setTimeout(() => {
-            setSuccess('');
-            if (!isLogin) {
-                setIsLogin(true);
-                setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+        try {
+            let userData;
+            if (isLogin) {
+                userData = await login(formData.email, formData.password);
+            } else {
+                userData = await registration(formData.email, formData.password, formData.name);
             }
-        }, 2000);
+            user.setUser(userData);
+            user.setIsAuth(true);
+            navigate(LAVKA_ROUTE);
+        } catch (err) {
+            const errorMsg = err.response?.data?.message || 'Ошибка при выполнении запроса';
+            setError(errorMsg);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const toggleMode = () => {
@@ -100,6 +117,7 @@ const Auth = () => {
                                             onChange={handleChange}
                                             placeholder="Введите ваше имя"
                                             className="auth-input"
+                                            disabled={loading}
                                         />
                                     </Form.Group>
                                 )}
@@ -113,6 +131,7 @@ const Auth = () => {
                                         onChange={handleChange}
                                         placeholder="example@mail.com"
                                         className="auth-input"
+                                        disabled={loading}
                                     />
                                 </Form.Group>
 
@@ -123,8 +142,9 @@ const Auth = () => {
                                         name="password"
                                         value={formData.password}
                                         onChange={handleChange}
-                                        placeholder="••••••••"
+                                        placeholder="Пароль"
                                         className="auth-input"
+                                        disabled={loading}
                                     />
                                 </Form.Group>
 
@@ -136,14 +156,15 @@ const Auth = () => {
                                             name="confirmPassword"
                                             value={formData.confirmPassword}
                                             onChange={handleChange}
-                                            placeholder="••••••••"
+                                            placeholder="Пароль"
                                             className="auth-input"
+                                            disabled={loading}
                                         />
                                     </Form.Group>
                                 )}
 
-                                <Button type="submit" className="auth-btn w-100">
-                                    {isLogin ? 'Войти' : 'Зарегистрироваться'}
+                                <Button type="submit" className="auth-btn w-100" disabled={loading}>
+                                    {loading ? 'Загрузка...' : (isLogin ? 'Войти' : 'Зарегистрироваться')}
                                 </Button>
                             </Form>
 
@@ -158,6 +179,6 @@ const Auth = () => {
             </Container>
         </div>
     );
-};
+});
 
 export default Auth;

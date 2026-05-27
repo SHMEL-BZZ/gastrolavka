@@ -1,10 +1,10 @@
 const Router = require('express');
 const router = new Router();
-const dishIngredientsController = require('../controllers/dishIngredientsController');
+const dishCategoryController = require('../controllers/dishCategoriesController');
 
-router.post("/",dishIngredientsController.create );
-router.get("/", dishIngredientsController.getAll);
-router.get("/:id", dishIngredientsController.getOne);
+router.post("/",dishCategoryController.create );
+router.get("/", dishCategoryController.getAll);
+router.get("/:id", dishCategoryController.getOne);
 router.delete("/:id", );
 
 module.exports = router

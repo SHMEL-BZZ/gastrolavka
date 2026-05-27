@@ -1,9 +1,9 @@
-import Admin from "./pages/Admin";
-import {ADMIN_ROUTE, BASKET_ROUTE, DISH_ROUTE, LAVKA_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE} from "./utils/consts";
-import Lavka from "./pages/Lavka";
-import Auth from "./pages/Auth";
-import Basket from "./pages/Basket";
-import DishPage from "./pages/DishPage";
+import Admin from "../pages/Admin";
+import {ADMIN_ROUTE, BASKET_ROUTE, DISH_ROUTE, LAVKA_ROUTE, LOGIN_ROUTE, REGISTRATION_ROUTE} from "./consts";
+import Lavka from "../pages/Lavka";
+import Auth from "../pages/Auth";
+import Basket from "../pages/Basket";
+import DishPage from "../pages/DishPage";
 
 export const authRoutes = [
     {
