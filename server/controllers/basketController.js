@@ -5,14 +5,20 @@ const {User, Basket, Dish} = require("../models/models");
 class BasketController {
     async getAll(req, res, next) {
         try {
-            const userId = req.user.id;
+            const userId = parseInt(req.user.id, 10);
+            if (isNaN(userId)) throw new Error('Invalid user id');
 
             const basket = await sequelize.query(
-                'SELECT * FROM get_basket($1)',
-                {
-                    bind: [userId],
-                    type: sequelize.QueryTypes.SELECT
-                }
+                `SELECT 
+                b.dish_id, 
+                d.name, 
+                d.price, 
+                b.quantity, 
+                d.picture
+             FROM basket b
+             JOIN dishes d ON b.dish_id = d.dish_id
+             WHERE b.user_id = $1 AND (b.is_excluded IS FALSE OR b.is_excluded IS NULL)`,
+                { bind: [userId], type: sequelize.QueryTypes.SELECT }
             );
 
             return res.json(basket);

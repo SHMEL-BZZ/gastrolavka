@@ -28,7 +28,6 @@ const start = async () => {
         await sequelize.authenticate();
         console.log('Database connection established successfully.');
         // Синхронизация с базой данных
-        // await sequelize.sync(); // или { force: true } для пересоздания таблиц
         // console.log('Database sync established successfully.');
         // Запуск сервера
         app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

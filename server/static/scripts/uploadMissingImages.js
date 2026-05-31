@@ -17,7 +17,6 @@ const sequelize = require('../../db');
             return;
         }
 
-        // Целевая папка: static/img
         const targetDir = path.resolve(__dirname, '..../static/img');
         if (!fs.existsSync(targetDir)) {
             fs.mkdirSync(targetDir, { recursive: true });
@@ -40,7 +39,7 @@ const sequelize = require('../../db');
                 // Сохраняем относительный путь с подпапкой img/
                 dish.picture = `img/${newName}`;
                 await dish.save();
-                console.log(`✅ Блюдо ${dishId} → img/${newName}`);
+                console.log(`✅ Блюдо ${dishId} → ${newName}`);
             } else if (dish && dish.picture) {
                 console.log(`⏭️ Блюдо ${dishId} уже имеет картинку: ${dish.picture}`);
             } else {

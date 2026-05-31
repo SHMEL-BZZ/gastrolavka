@@ -8,3 +8,4 @@ router.get('/:id', dishesController.getOne);
 router.put("/:id", dishesController.updatePicture);
 
 module.exports = router
+

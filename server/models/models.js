@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../db');
 
-// ----- Модель roles -----
+//  Модель roles 
 const Role = sequelize.define('Role', {
     role_id: { type: DataTypes.SMALLINT, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.TEXT, allowNull: false },
@@ -10,7 +10,7 @@ const Role = sequelize.define('Role', {
     timestamps: false
 });
 
-// ----- Модель user -----
+//  Модель user 
 const User = sequelize.define('User', {
     user_id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
     username: { type: DataTypes.TEXT, allowNull: false, unique: true },
@@ -23,7 +23,7 @@ const User = sequelize.define('User', {
     timestamps: false
 });
 
-// ----- Модель statuses -----
+//  Модель statuses 
 const Status = sequelize.define('Status', {
     status_id: { type: DataTypes.SMALLINT, primaryKey: true, autoIncrement: false },
     name: { type: DataTypes.TEXT, allowNull: false },
@@ -32,7 +32,7 @@ const Status = sequelize.define('Status', {
     timestamps: false
 });
 
-// ----- Модель city -----
+//  Модель city 
 const City = sequelize.define('City', {
     city_id: { type: DataTypes.SMALLINT, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.TEXT, allowNull: false, unique: true },
@@ -41,7 +41,7 @@ const City = sequelize.define('City', {
     timestamps: false
 });
 
-// ----- Модель customer_addresses -----
+//  Модель customer_addresses 
 const CustomerAddress = sequelize.define('CustomerAddress', {
     customer_address_id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
     customer_id: { type: DataTypes.BIGINT, allowNull: false },
@@ -52,16 +52,16 @@ const CustomerAddress = sequelize.define('CustomerAddress', {
     timestamps: false
 });
 
-// ----- Модель dish_categories -----
+//  Модель dish_categories 
 const DishCategory = sequelize.define('DishCategory', {
-    dish_categoty_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    dish_categoty_id : { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.TEXT, allowNull: false, unique: true },
 }, {
     tableName: 'dish_categories',
     timestamps: false
 });
 
-// ----- Модель units_of_measure -----
+//  Модель units_of_measure 
 const UnitOfMeasure = sequelize.define('UnitOfMeasure', {
     unit_of_measure_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.TEXT, allowNull: false },
@@ -70,7 +70,7 @@ const UnitOfMeasure = sequelize.define('UnitOfMeasure', {
     timestamps: false
 });
 
-// ----- Модель dishes -----
+//  Модель dishes 
 const Dish = sequelize.define('Dish', {
     dish_id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.TEXT, allowNull: false },
@@ -91,7 +91,7 @@ const Dish = sequelize.define('Dish', {
     timestamps: false
 });
 
-// ----- Модель ingredients -----
+//  Модель ingredients 
 const Ingredient = sequelize.define('Ingredient', {
     ingredient_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.TEXT, allowNull: false },
@@ -101,7 +101,7 @@ const Ingredient = sequelize.define('Ingredient', {
     timestamps: false
 });
 
-// ----- Модель dish_ingredients (промежуточная) -----
+//  Модель dish_ingredients (промежуточная) 
 const DishIngredient = sequelize.define('DishIngredient', {
     dish_id: { type: DataTypes.BIGINT, allowNull: false, primaryKey: true },
     ingredient_id: { type: DataTypes.BIGINT, allowNull: false, primaryKey: true },
@@ -110,7 +110,7 @@ const DishIngredient = sequelize.define('DishIngredient', {
     timestamps: false
 });
 
-// ----- Модель sets -----
+//  Модель sets 
 const Set = sequelize.define('Set', {
     set_id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.TEXT, allowNull: false },
@@ -122,7 +122,7 @@ const Set = sequelize.define('Set', {
     timestamps: false
 });
 
-// ----- Модель groups_sets -----
+//  Модель groups_sets 
 const GroupSet = sequelize.define('GroupSet', {
     group_set_id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
     set_id: { type: DataTypes.INTEGER, allowNull: false },
@@ -133,7 +133,7 @@ const GroupSet = sequelize.define('GroupSet', {
     timestamps: false
 });
 
-// ----- Модель requirement_types -----
+//  Модель requirement_types 
 const RequirementType = sequelize.define('RequirementType', {
     requirement_type_id: { type: DataTypes.SMALLINT, primaryKey: true, autoIncrement: false },
     name: { type: DataTypes.TEXT, allowNull: false },
@@ -142,7 +142,7 @@ const RequirementType = sequelize.define('RequirementType', {
     timestamps: false
 });
 
-// ----- Модель special_requirements_dishes_group -----
+//  Модель special_requirements_dishes_group 
 const SpecialRequirement = sequelize.define('SpecialRequirement', {
     special_requirement_dish_id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
     dish_id: { type: DataTypes.BIGINT, allowNull: false },
@@ -154,7 +154,7 @@ const SpecialRequirement = sequelize.define('SpecialRequirement', {
     timestamps: false
 });
 
-// ----- Модель promotions -----
+//  Модель promotions 
 const Promotion = sequelize.define('Promotion', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING(100), allowNull: false },
@@ -167,7 +167,7 @@ const Promotion = sequelize.define('Promotion', {
     timestamps: false
 });
 
-// ----- Модель promotion_dishes (промежуточная) -----
+//  Модель promotion_dishes (промежуточная) 
 const PromotionDish = sequelize.define('PromotionDish', {
     promotion_id: { type: DataTypes.INTEGER, allowNull: false, primaryKey: true },
     dish_id: { type: DataTypes.BIGINT, allowNull: false, primaryKey: true },
@@ -176,7 +176,7 @@ const PromotionDish = sequelize.define('PromotionDish', {
     timestamps: false
 });
 
-// ----- Модель available_dishes -----
+//  Модель available_dishes 
 const AvailibleDish = sequelize.define('AvailibleDish', {
     availible_dish_id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
     manufacture_date: { type: DataTypes.DATE, allowNull: false },
@@ -187,7 +187,7 @@ const AvailibleDish = sequelize.define('AvailibleDish', {
     timestamps: false
 });
 
-// ----- Модель order -----
+//  Модель order 
 const Order = sequelize.define('Order', {
     order_id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
     date_time: { type: DataTypes.DATE, allowNull: false },
@@ -203,7 +203,7 @@ const Order = sequelize.define('Order', {
     timestamps: false
 });
 
-// ----- Модель order_details -----
+//  Модель order_details 
 const OrderDetail = sequelize.define('OrderDetail', {
     order_detail_id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
     order_id: { type: DataTypes.BIGINT, allowNull: false },
@@ -215,7 +215,7 @@ const OrderDetail = sequelize.define('OrderDetail', {
     timestamps: false
 });
 
-// ----- Модель basket -----
+//  Модель basket 
 const Basket = sequelize.define('Basket', {
     basket_id: { type: DataTypes.BIGINT, primaryKey: true, autoIncrement: true },
     user_id: { type: DataTypes.BIGINT, allowNull: false },
@@ -229,7 +229,7 @@ const Basket = sequelize.define('Basket', {
     timestamps: false
 });
 
-// ----- Ассоциации (связи) -----
+//  Ассоциации (связи) 
 
 // Role -> User
 Role.hasMany(User, { foreignKey: 'role_id' });

@@ -1,19 +1,21 @@
-import React, { useState, useContext } from 'react';
-import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import { observer } from 'mobx-react-lite';
-import { login, registration } from "../http/userAPI";
-import { LAVKA_ROUTE } from "../utils/consts";
-import { Context } from "../index";
+
+import React, {useState, useContext} from 'react';
+import {Container, Row, Col, Form, Button, Alert} from 'react-bootstrap';
+import {useNavigate} from 'react-router-dom';
+import {observer} from 'mobx-react-lite';
+import {login, registration} from "../http/userAPI";
+import {LAVKA_ROUTE} from "../utils/consts";
+import {Context} from "../index";
 import '../static/content/auth.css';
 
 const Auth = observer(() => {
     const navigate = useNavigate();
-    const { user } = useContext(Context);
+    const {user} = useContext(Context);
     const [isLogin, setIsLogin] = useState(true);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        phone: '',
         password: '',
         confirmPassword: ''
     });
@@ -22,8 +24,8 @@ const Auth = observer(() => {
     const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
+        const {name, value} = e.target;
+        setFormData(prev => ({...prev, [name]: value}));
         setError('');
     };
 
@@ -39,6 +41,13 @@ const Auth = observer(() => {
                 setLoading(false);
                 return;
             }
+
+            if (!formData.phone.trim()) {
+                setError('Введите телефон');
+                setLoading(false);
+                return;
+            }
+
             if (formData.password !== formData.confirmPassword) {
                 setError('Пароли не совпадают');
                 setLoading(false);
@@ -50,6 +59,8 @@ const Auth = observer(() => {
                 return;
             }
         }
+
+
 
         if (!formData.email.trim()) {
             setError('Введите email');
@@ -67,7 +78,7 @@ const Auth = observer(() => {
             if (isLogin) {
                 userData = await login(formData.email, formData.password);
             } else {
-                userData = await registration(formData.email, formData.password, formData.name);
+                await registration(formData.email, formData.password, formData.name, formData.phone, 2);
             }
             user.setUser(userData);
             user.setIsAuth(true);
@@ -84,7 +95,7 @@ const Auth = observer(() => {
         setIsLogin(!isLogin);
         setError('');
         setSuccess('');
-        setFormData({ name: '', email: '', password: '', confirmPassword: '' });
+        setFormData({name: '', email: '', phone: '', password: '', confirmPassword: ''});
     };
 
     return (
@@ -116,6 +127,21 @@ const Auth = observer(() => {
                                             value={formData.name}
                                             onChange={handleChange}
                                             placeholder="Введите ваше имя"
+                                            className="auth-input"
+                                            disabled={loading}
+                                        />
+                                    </Form.Group>
+                                )}
+
+                                {!isLogin && (
+                                    <Form.Group className="mb-3" controlId="formPhone">
+                                        <Form.Label>Телефон</Form.Label>
+                                        <Form.Control
+                                            type="tel"
+                                            name="phone"
+                                            value={formData.phone}
+                                            onChange={handleChange}
+                                            placeholder="+79990000000"
                                             className="auth-input"
                                             disabled={loading}
                                         />
