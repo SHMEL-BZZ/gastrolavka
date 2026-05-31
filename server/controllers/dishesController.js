@@ -1,8 +1,10 @@
+const fs = require('fs');
 const path = require("path");
 const uuid = { v4: require('uuid').v4 };
 const ApiError = require("../error/ApiError");
 const {Dish, DishCategory, UnitOfMeasure} = require("../models/models");
 const {where} = require("sequelize");
+const models = require("../models/models");
 
 class DishesController {
     async create(req, res, next) {
@@ -24,42 +26,35 @@ class DishesController {
         // отступ
         let offset = page * limit - limit
         //  сортировка по категории и доступности
-        let dishes;
-        if (!category_id && !is_availible) {
-            dishes = await Dish.findAndCountAll({ limit, offset });
-        } else if (!category_id && is_availible) {
-            dishes = await Dish.findAndCountAll({ where: { is_availible }, limit, offset });
-        } else if (category_id && is_availible) {
-            dishes = await Dish.findAndCountAll({ where: { category_id, is_availible }, limit, offset });
-        } else if (category_id && !is_availible) {
-            dishes = await Dish.findAndCountAll({ where: { category_id }, limit, offset });
-        }
-        return res.json(dishes)
+        let where = {};
+        if (category_id) where.category_id = category_id;
+        if (is_availible !== undefined) where.is_availible = is_availible;
+
+        const dishes = await Dish.findAndCountAll({ where, limit, offset });
+        return res.json(dishes);
     }
     async getOne(req, res) {
-        const {id} = req.params;          // параметр из роута (например, /api/dishes/1)
+        const {id} = req.params;
         const dish = await Dish.findOne({
-            where: { dish_id: id },       // явно указываем dish_id
-            include: [DishCategory, UnitOfMeasure]
+            where: { id },
+            include: [{model: UnitOfMeasure, as: "info"}],
         });
         return res.json(dish);
     }
     async updatePicture(req, res, next) {
         try {
-            const { id } = req.params;   // dish_id или id
+            const { id } = req.params;
             const { picture } = req.files;
 
             if (!picture) {
                 return next(ApiError.badRequest('Файл изображения не передан'));
             }
 
-            // Находим блюдо
             const dish = await Dish.findByPk(id);
             if (!dish) {
                 return next(ApiError.notFound('Блюдо не найдено'));
             }
 
-            // Удаляем старую картинку, если она есть (опционально)
             if (dish.picture) {
                 const oldPath = path.resolve(__dirname, '..', 'static', dish.picture);
                 if (fs.existsSync(oldPath)) {
@@ -67,11 +62,9 @@ class DishesController {
                 }
             }
 
-            // Сохраняем новую
             let fileName = uuid.v4() + '.jpg';
             picture.mv(path.resolve(__dirname, '..', 'static', fileName));
 
-            // Обновляем запись
             dish.picture = fileName;
             await dish.save();
 

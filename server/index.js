@@ -10,10 +10,13 @@ const app = express();
 const errorHandler = require('./middleware/ErrorHandlerMiddleware');
 const path = require('path');
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true
+}));
 app.use(express.json());
 app.use(fileUpload({}));
-app.use(express.static(path.resolve(__dirname, 'static')));
+app.use('/img', express.static(path.resolve(__dirname, 'static/img')));
 app.use('/api', router)
 
 // Обработка ошибок, последний middleware
@@ -25,7 +28,6 @@ const start = async () => {
         await sequelize.authenticate();
         console.log('Database connection established successfully.');
         // Синхронизация с базой данных
-        // await sequelize.sync(); // или { force: true } для пересоздания таблиц
         // console.log('Database sync established successfully.');
         // Запуск сервера
         app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
